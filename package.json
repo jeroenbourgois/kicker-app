@@ -1,0 +1,10 @@
+{
+  "author": "Jeroen Bourgois",
+  "name": "KickerApp",
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt-simple-mocha": "0.2.x",
+    "chai": "1.0.x"
+  }
+}
