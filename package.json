@@ -2,9 +2,12 @@
   "author": "Jeroen Bourgois",
   "name": "KickerApp",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "coffee-script": "*" 
+  },
   "devDependencies": {
     "grunt-mocha": "*",
-    "grunt-coffee": "*"
+    "grunt-coffee": "*",
+    "mocha": "*"
   }
 }
