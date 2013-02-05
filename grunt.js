@@ -4,19 +4,29 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     concat: {
+      app: {
+        src: [
+          'public/javascripts/src/app/app.js',
+          'public/javascripts/src/app/config.js',
+          'public/javascripts/src/app/router.js',
+          'public/javascripts/src/app/helpers/*.js',
+          'public/javascripts/src/app/models/*.js',
+          'public/javascripts/src/app/views/*.js',
+        ],
+        dest: 'public/javascripts/app.js',
+        separator: ';'
+      },
       dist: {
         src: [
-          'assets/js/vendor/jquery-1.8.2.min.js',
-          'assets/js/vendor/add2home.js',
-          'assets/js/vendor/autoscroll.js',
-          'assets/js/vendor/underscore.js',
-          'assets/js/vendor/backbone.js',
-          'assets/js/vendor/handlebars.runtime.js',
-          'assets/js/templates.js',
-          'assets/js/templates-helper.js',
-          'assets/js/app.js'
+          'public/javascripts/vendor/jquery.js',
+          'public/javascripts/vendor/lodash.js',
+          'public/javascripts/vendor/backbone.js',
+          'public/javascripts/vendor/handlebars.js',
+          'public/javascripts/templates.js',
+          'public/javascripts/templates-helper.js',
+          'public/javascripts/app.js'
         ],
-        dest: 'assets/js/main.js',
+        dest: 'public/javascripts/main.js',
         separator: ';'
       },
 
@@ -31,19 +41,17 @@ module.exports = function(grunt) {
 
     min: {
       app: {
-        dist: {
-          src: ['assets/js/main.js'],
-          dest: 'assets/js/main.min.js'
-        }
+        src: ['public/javascripts/main.js'],
+        dest: 'public/javascripts/main.min.js'
       },
     },
     
     coffee: {
       app: {
-        src: ['src/**/*.coffee'],
-        dest: 'assets/js/src',
+        src: ['app/**/*.coffee'],
+        dest: 'public/javascripts/src',
         options: {
-          bare: true,
+          bare: false,
           preserve_dirs: true
         }
       },
@@ -54,6 +62,14 @@ module.exports = function(grunt) {
         options: {
           bare: true,
           preserve_dirs: true
+        }
+      }
+    },
+
+    sass: {
+      dist: {
+        files: {
+          'public/stylesheets/style.css': 'public/stylesheets/style.sass'
         }
       }
     },
@@ -73,9 +89,18 @@ module.exports = function(grunt) {
         tasks: 'mocha'
       }, 
 
+      // sass: {
+      //   files: [ 'public/stylesheets/*.sass' ],
+      //   tasks: 'sass'
+      // },
+
       app: {
-        files: ['assets/js/vendor/*.js', 'assets/js/app.js'],
-        tasks: 'concat min'
+        files: [
+          'app/**/*.coffee',
+          'public/javascripts/vendor/*.js',
+          'public/javascripts/app.js'
+          ],
+        tasks: 'coffee:app concat min'
       }
     },
 
@@ -83,9 +108,10 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-coffee');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   
   // Default task.
-  grunt.registerTask('default', 'concat min');
+  grunt.registerTask('default', 'coffee:app concat min sass');
 
   grunt.registerTask('test', 'coffee:spec concat:spec mocha');
 

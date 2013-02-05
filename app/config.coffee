@@ -1,0 +1,2 @@
+KickerApp.config =
+  root: '/'

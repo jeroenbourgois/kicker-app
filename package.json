@@ -3,11 +3,13 @@
   "name": "KickerApp",
   "version": "0.0.1",
   "dependencies": {
-    "coffee-script": "*" 
-  },
-  "devDependencies": {
+    "coffee-script": "*",
     "grunt-mocha": "*",
     "grunt-coffee": "*",
+    "grunt-contrib-sass": "*",
     "mocha": "*"
+  },
+  "devDependencies": {
+    "grunt-contrib-sass": "~0.2.1"
   }
 }
