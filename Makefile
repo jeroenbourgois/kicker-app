@@ -19,5 +19,4 @@ test-watch:
 		--compilers coffee:coffee-script \
 		$(TESTS)
 
-
 .PHONY: test test-watch

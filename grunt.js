@@ -3,30 +3,65 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
 
+    compass: {
+      dist: {
+        // http://compass-style.org/help/tutorials/configuration-reference/#configuration-properties
+        options: {
+          css_dir: 'assets/css',
+          sass_dir: 'assets/css',
+          images_dir: 'assets/img',
+          javascripts_dir: 'assets/js',
+          force: true
+        }
+      }
+    },
+
+    coffee: {
+      app: {
+        src: ['assets/coffee/**/*.coffee'],
+        dest: 'assets/js',
+        options: {
+          bare: false,
+          preserve_dirs: true,
+          base_path: 'assets/coffee'
+        }
+      },
+
+      spec: {
+        src: ['test/spec/**/*.coffee'],
+        dest: 'tmp',
+        options: {
+          bare: true,
+          preserve_dirs: true
+        }
+      }
+    },
+
     concat: {
       app: {
         src: [
-          'public/javascripts/src/app/app.js',
-          'public/javascripts/src/app/config.js',
-          'public/javascripts/src/app/router.js',
-          'public/javascripts/src/app/helpers/*.js',
-          'public/javascripts/src/app/models/*.js',
-          'public/javascripts/src/app/views/*.js',
+          'assets/js/app.js',
+          'assets/js/main.js',
+          'assets/js/config.js',
+          'assets/js/router.js',
+          'assets/js/helpers/*.js',
+          'assets/js/models/*.js',
+          'assets/js/views/*.js',
         ],
-        dest: 'public/javascripts/app.js',
+        dest: 'assets/js/app.js',
         separator: ';'
       },
       dist: {
         src: [
-          'public/javascripts/vendor/jquery.js',
-          'public/javascripts/vendor/lodash.js',
-          'public/javascripts/vendor/backbone.js',
-          'public/javascripts/vendor/handlebars.js',
-          'public/javascripts/templates.js',
-          'public/javascripts/templates-helper.js',
-          'public/javascripts/app.js'
+          'assets/js/vendor/jquery.js',
+          'assets/js/vendor/lodash.js',
+          'assets/js/vendor/backbone.js',
+          'assets/js/vendor/handlebars.js',
+          'assets/js/templates.js',
+          'assets/js/templates-helper.js',
+          'assets/js/app.js'
         ],
-        dest: 'public/javascripts/main.js',
+        dest: 'assets/js/javascript.js',
         separator: ';'
       },
 
@@ -41,37 +76,9 @@ module.exports = function(grunt) {
 
     min: {
       app: {
-        src: ['public/javascripts/main.js'],
-        dest: 'public/javascripts/main.min.js'
+        src: ['assets/js/javascript.js'],
+        dest: 'assets/js/javascript.min.js'
       },
-    },
-    
-    coffee: {
-      app: {
-        src: ['app/**/*.coffee'],
-        dest: 'public/javascripts/src',
-        options: {
-          bare: false,
-          preserve_dirs: true
-        }
-      },
-
-      spec: {
-        src: ['test/spec/**/*.coffee'],
-        dest: 'tmp',
-        options: {
-          bare: true,
-          preserve_dirs: true
-        }
-      }
-    },
-
-    sass: {
-      dist: {
-        files: {
-          'public/stylesheets/style.css': 'public/stylesheets/style.sass'
-        }
-      }
     },
 
     mocha: {
@@ -89,18 +96,19 @@ module.exports = function(grunt) {
         tasks: 'mocha'
       }, 
 
-      // sass: {
-      //   files: [ 'public/stylesheets/*.sass' ],
-      //   tasks: 'sass'
-      // },
+      compass: {
+        files: [
+          'assets/css/**/*.{scss,sass}'
+        ],
+        tasks: 'compass reload'
+      },
 
       app: {
         files: [
-          'app/**/*.coffee',
-          'public/javascripts/vendor/*.js',
-          'public/javascripts/app.js'
+          'assets/**/*.coffee',
+          'assets/**/*.sass',
           ],
-        tasks: 'coffee:app concat min'
+        tasks: 'coffee:app concat'
       }
     },
 
@@ -111,9 +119,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   
   // Default task.
-  grunt.registerTask('default', 'coffee:app concat min sass');
-
+  grunt.registerTask('default', 'coffee:app concat');
   grunt.registerTask('test', 'coffee:spec concat:spec mocha');
-
   grunt.registerTask('test-watch', 'mocha watch:test');
 };

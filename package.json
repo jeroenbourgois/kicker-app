@@ -1,15 +1,12 @@
 {
-  "author": "Jeroen Bourgois",
-  "name": "KickerApp",
+  "author": "BBDO",
+  "name": "PROJECTNAME",
   "version": "0.0.1",
   "dependencies": {
-    "coffee-script": "*",
     "grunt-mocha": "*",
     "grunt-coffee": "*",
-    "grunt-contrib-sass": "*",
+    "grunt-compass": "*",
     "mocha": "*"
   },
-  "devDependencies": {
-    "grunt-contrib-sass": "~0.2.1"
-  }
+  "devDependencies": { }
 }
